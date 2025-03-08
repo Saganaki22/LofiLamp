@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+
+<html lang="en" style="--heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Lofi Lamp | Interactive SVG Lava Lamp</title>
+  <meta name="description" content="An interactive lava lamp visualization with customizable colors, controls, and lofi music. Perfect for relaxation and focus.">
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Lofi Lamp | Interactive SVG Lava Lamp">
+  <meta property="og:description" content="An interactive lava lamp visualization with customizable colors, controls, and lofi music. Perfect for relaxation and focus.">
+  <meta property="og:image" content="https://i.ibb.co/QvbQwbvW/zscsc.jpg">
+  <meta property="og:url" content="https://saganaki22.github.io/LofiLamp/">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lofi Lamp | Interactive SVG Lava Lamp">
+  <meta name="twitter:description" content="An interactive SVG lava lamp visualization with customizable colors, controls, and lofi music.">
+  <meta name="twitter:image" content="https://i.ibb.co/QvbQwbvW/zscsc.jpg">
+
+  <link href="./Lofi Lamp _ Interactive SVG Lava Lamp_files/css" rel="stylesheet" type="text/css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    html, body {
+      pointer-events: auto;
+      touch-action: manipulation;
+    }
+
+    body {
+      background-color: #1d0033;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 1.5s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .scene {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      height: 100vh;
+      overflow: hidden; /* Prevent scrolling */
+    }
+
+    /* Starry background (initially hidden) */
+    #stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    #stars {
+      width: 1px;
+      height: 1px;
+      background: transparent;
+      box-shadow: 268px 1632px #FFF, 835px 204px #FFF, 1077px 1756px #FFF, 335px 508px #FFF, 1174px 1897px #FFF, 520px 95px #FFF, 1446px 1901px #FFF, 1328px 1758px #FFF, 669px 1689px #FFF, 554px 1450px #FFF, 1900px 1413px #FFF, 1018px 810px #FFF, 1396px 927px #FFF, 1753px 33px #FFF, 1483px 1614px #FFF, 1996px 241px #FFF, 153px 1342px #FFF, 1565px 435px #FFF, 1310px 1058px #FFF, 1627px 730px #FFF;
+      animation: animStar 50s linear infinite;
+    }
+
+    #stars:after {
+      content: " ";
+      position: absolute;
+      top: 2000px;
+      width: 1px;
+      height: 1px;
+      background: transparent;
+      box-shadow: 268px 1632px #FFF, 835px 204px #FFF, 1077px 1756px #FFF, 335px 508px #FFF, 1174px 1897px #FFF, 520px 95px #FFF, 1446px 1901px #FFF, 1328px 1758px #FFF, 669px 1689px #FFF, 554px 1450px #FFF, 1900px 1413px #FFF, 1018px 810px #FFF, 1396px 927px #FFF, 1753px 33px #FFF, 1483px 1614px #FFF, 1996px 241px #FFF, 153px 1342px #FFF, 1565px 435px #FFF, 1310px 1058px #FFF, 1627px 730px #FFF;
+    }
+
+    #stars2 {
+      width: 2px;
+      height: 2px;
+      background: transparent;
+      box-shadow: 1162px 1505px #FFF, 770px 276px #FFF, 1316px 1365px #FFF, 1542px 1183px #FFF, 507px 1320px #FFF, 1632px 1441px #FFF, 291px 1025px #FFF, 1786px 274px #FFF, 1569px 1468px #FFF, 1214px 291px #FFF;
+      animation: animStar 100s linear infinite;
+    }
+
+    #stars2:after {
+      content: " ";
+      position: absolute;
+      top: 2000px;
+      width: 2px;
+      height: 2px;
+      background: transparent;
+      box-shadow: 1162px 1505px #FFF, 770px 276px #FFF, 1316px 1365px #FFF, 1542px 1183px #FFF, 507px 1320px #FFF, 1632px 1441px #FFF, 291px 1025px #FFF, 1786px 274px #FFF, 1569px 1468px #FFF, 1214px 291px #FFF;
+    }
+
+    #stars3 {
+      width: 3px;
+      height: 3px;
+      background: transparent;
+      box-shadow: 387px 924px #FFF, 1528px 173px #FFF, 1349px 515px #FFF, 390px 47px #FFF, 1858px 1121px #FFF, 1823px 1042px #FFF, 1435px 433px #FFF, 1283px 788px #FFF, 322px 1535px #FFF, 152px 1909px #FFF;
+      animation: animStar 150s linear infinite;
+    }
+
+    #stars3:after {
+      content: " ";
+      position: absolute;
+      top: 2000px;
+      width: 3px;
+      height: 3px;
+      background: transparent;
+      box-shadow: 387px 924px #FFF, 1528px 173px #FFF, 1349px 515px #FFF, 390px 47px #FFF, 1858px 1121px #FFF, 1823px 1042px #FFF, 1435px 433px #FFF, 1283px 788px #FFF, 322px 1535px #FFF, 152px 1909px #FFF;
+    }
+
+    @keyframes animStar {
+      from {
+        transform: translateY(0px);
+      }
+      to {
+        transform: translateY(-2000px);
+      }
+    }
+
+    /* Lava Lamp Styles */
+    .lava-lamp {
+      height: calc(var(--height) * 1px);
+      width: calc(var(--width) * 1px);
+      position: relative;
+      transform: scale(var(--scale, 1));
+      transform-origin: center center;
+      transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Slower, smoother transition */
+      margin: 0 auto; /* Center horizontally */
+    }
+
+    .lava-lamp:after {
+      content: '';
+      height: 500px;
+      width: 500px;
+      position: absolute;
+      background: radial-gradient(circle at 50% 50%, #19b5fe, transparent 60%);
+      top: 45%;
+      left: 50%;
+      z-index: 4;
+      transform: translate(-50%, -50%);
+      filter: blur(10px);
+      opacity: var(--glare-intensity, 0.5);
+      transition: opacity 0.3s ease;
+    }
+
+    .lava-lamp:before {
+      content: '';
+      height: 25%;
+      width: 300%;
+      border-radius: 100%;
+      background: radial-gradient(ellipse at 50% 50%, #19b5fe, transparent 60%);
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      opacity: var(--glare-intensity, 0.5);
+      filter: blur(10px);
+    }
+
+    .lava-lamp__main {
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .lava-lamp__main:after,
+    .lava-lamp__main:before {
+      background: #000;
+      content: '';
+      height: 12%;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+
+    .lava-lamp__main:after {
+      top: 0;
+    }
+
+    .lava-lamp__main:before {
+      bottom: 0;
+      height: 26%;
+    }
+
+    .lava-lamp__glass {
+      background: radial-gradient(circle at 50% 50%, #3a539b 25%, #19b5fe);
+      border-radius: 50% / 10%;
+      overflow: hidden;
+      height: 70%;
+      left: 0;
+      position: absolute;
+      top: 10%;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .lava-lamp__base {
+      height: 20%;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      overflow: hidden;
+      border-radius: 0 0 50% 50% / 0 0 35% 35%;
+    }
+
+    .lava-lamp__base:before {
+      content: '';
+      background: #000;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: absolute;
+      top: -60%;
+      height: calc(var(--height) * 1px);
+      width: calc(var(--width) * 1px);
+    }
+
+    .lava-lamp__lava {
+      border-radius: 50% / 10%;
+      height: 100%;
+      overflow: visible;
+      position: absolute;
+      width: 100%;
+      filter: url('#goo');
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .lava-lamp__lava svg {
+      height: 280px;
+      width: 150px;
+      transform: translateZ(0);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .blob {
+      animation-delay: calc(var(--delay) * 1s);
+      animation-direction: var(--direction);
+      animation-duration: calc(var(--speed) * 1s * var(--viscosity-factor, 1));
+      animation-iteration-count: infinite;
+      animation-name: blob;
+      animation-timing-function: linear;
+      fill: #29f1c3;
+      transform-box: fill-box;
+      transform-origin: center center;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+      transition: r 0.8s ease-in-out; /* Smooth radius changes */
+    }
+
+    .blob--bottom,
+    .blob--top {
+      animation: none;
+    }
+
+    .blob--top {
+      animation: sway 20s infinite linear;
+    }
+
+    @keyframes sway {
+      50% {
+        transform: translate(50%, 0);
+      }
+    }
+
+    @keyframes blob {
+      from {
+        transform: skew(calc(var(--skewX) * 1deg * var(--tension-factor, 1)), 
+                       calc(var(--skewY) * 1deg * var(--tension-factor, 1))) 
+                   translate(0, 0);
+      }
+      to {
+        transform: skew(calc(var(--skewX) * 1deg * var(--tension-factor, 1)), 
+                       calc(var(--skewY) * 1deg * var(--tension-factor, 1))) 
+                   translate(0, calc((400 + (var(--height) * 2)) * -1px * var(--heat-factor, 1)));
+      }
+    }
+
+    /* Responsive sizing */
+    @media (max-width: 768px) {
+      .lava-lamp {
+        --height: 350;
+        --width: 120;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .lava-lamp {
+        --height: 300;
+        --width: 100;
+      }
+      
+      .controls-panel {
+        width: 280px;
+      }
+    }
+
+    /* Control Panel Styles */
+    .controls-panel {
+      position: fixed;
+      top: 50%;
+      left: -320px;
+      transform: translateY(-50%);
+      width: 320px;
+      background-color: rgba(20, 20, 20, 0.9);
+      border-radius: 0 15px 15px 0;
+      padding: 20px;
+      z-index: 110; /* Increased z-index to be above audio player (100) */
+      transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .controls-panel.active {
+      left: 0;
+    }
+
+    .controls-tab {
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      transform: translateY(-50%);
+      background-color: rgba(30, 30, 30, 0.8);
+      border-radius: 0 8px 8px 0;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 111; /* Also increase tab z-index */
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      height: 50px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .controls-tab:hover {
+      background-color: rgba(40, 40, 40, 0.9);
+    }
+
+    .controls-tab svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffffff;
+      stroke: #ffffff;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #ddd;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+
+    /* Color buttons */
+    .color-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .color-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .color-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    .color-button.active {
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+
+    .color-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+    }
+
+    #red-btn {
+      background-color: #ff4b4b;
+    }
+
+    #green-btn {
+      background-color: #4bff91;
+    }
+
+    #orange-btn {
+      background-color: #ffb84b;
+    }
+
+    #rainbow-btn {
+      background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+    }
+
+    .custom-color-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .custom-color-container label {
+      width: 100px;
+      font-size: 14px;
+    }
+
+    .color-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid transparent;
+      margin-left: 10px;
+    }
+
+    .color-circle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    #ambient-color-circle {
+      background: linear-gradient(45deg, #3a1f5d, #8453c6);
+    }
+
+    #custom-color, #ambient-color {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    /* Sliders */
+    .slider-container {
+      margin-bottom: 10px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .slider-label span {
+      font-size: 14px;
+    }
+
+    .slider-control {
+      width: 100%;
+      height: 5px;
+      background: #444;
+      border-radius: 5px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .slider-control::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .slider-control::-moz-range-thumb {
+      width: 15px;
+      height: 15px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Scale buttons */
+    .scale-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .scale-button {
+      flex: 1;
+      padding: 8px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scale-button:hover {
+      background-color: #444;
+    }
+
+    .scale-button.active {
+      background-color: #6c63ff;
+    }
+
+    /* Toggle switches */
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .toggle-switch label {
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .stars-toggle-container {
+      margin-left: 10px;
+      position: relative;
+    }
+
+    .toggle-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 50px;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .toggle-labels span:first-child {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .toggle-labels span:last-child {
+      position: absolute;
+      right: 0px;
+      top: 0;
+    }
+
+    /* Star icon on toggle */
+    .star-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      fill: #9c6ddb; /* Purple star color */
+      pointer-events: none;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* For the stars toggle button */
+    .slider-button {
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    input:checked + .slider .slider-button {
+      transform: translateX(24px);
+    }
+
+    /* Hide default button for the stars toggle */
+    #stars-toggle + .slider:before {
+      display: none;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #333;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #6c63ff;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #6c63ff;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    .fullscreen-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      margin-top: 15px;
+    }
+
+    .fullscreen-btn:hover {
+      background-color: #5a52cc;
+      transform: scale(1.02);
+    }
+
+    /* Audio Player Styles */
+    .audio-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      height: 70px;
+      background-color: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+      color: white;
+      font-family: 'Lato', sans-serif;
+      border-radius: 0;
+    }
+
+    /* Control Panel Tab - Add responsive positioning */
+    @media (max-width: 768px) {
+      .controls-tab {
+        position: absolute; /* Change back to absolute */
+        top: 50%;
+        right: -40px; /* Put it back on the right side of the panel */
+        left: auto; /* Reset the left position */
+        transform: translateY(-50%);
+        border-radius: 0 8px 8px 0;
+        z-index: 101;
+      }
+    }
+    
+    /* Mobile and tablet audio player */
+    @media (max-width: 768px) {
+      .audio-player {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: 50px; /* Smaller height */
+      }
+      
+      .progress-container, 
+      .volume-container {
+        display: none !important;
+      }
+      
+      .audio-controls {
+        margin: 0;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        display: flex;
+        position: static; /* Remove absolute positioning */
+        transform: none;
+      }
+      
+      .audio-title-container {
+        display: flex;
+        align-items: center;
+        margin: 0;
+      }
+      
+      .audio-title {
+        overflow: visible; /* Make sure text is not cut off */
+        white-space: nowrap;
+      }
+      
+      .play-btn {
+        margin-right: 10px;
+        width: 36px; /* Slightly smaller */
+        height: 36px;
+      }
+      
+      /* Fix live indicator */
+      .live-indicator {
+        margin-right: 6px;
+      }
+    }
+    
+    /* Mobile specific */
+    @media (max-width: 480px) {
+      .audio-player {
+        height: 45px;
+      }
+      
+      .audio-title {
+        max-width: 90px; /* Ensure full text is visible */
+      }
+    }
+    
+    .audio-title-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-grow: 0;
+      min-width: 120px;
+    }
+    
+    .audio-title {
+      font-size: 14px;
+      font-weight: 300;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      margin-right: 3px;
+    }
+    
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-shrink: 0;
+    }
+    
+    .progress-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: 4px;
+      min-width: 100px;
+    }
+    
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 200px;
+      flex-shrink: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .audio-title {
+        max-width: 150px;
+      }
+      
+      .volume-container {
+        width: 150px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .audio-title {
+        max-width: 120px;
+      }
+      
+      .audio-title-container {
+        margin-left: 5px;
+      }
+    }
+    
+    .live-indicator {
+      width: 10px;
+      height: 10px;
+      background-color: #ff0000;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+      }
+      
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(255, 0, 0, 0);
+      }
+      
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+      }
+    }
+
+    .play-btn {
+      width: 40px;
+      height: 40px;
+      background-color: #6c63ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+      background-color: #5a52cc;
+    }
+
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .volume-icon {
+      width: 20px;
+      height: 20px;
+      fill: white;
+      cursor: pointer;
+    }
+
+    .volume-slider {
+      flex: 1;
+      height: 5px;
+      background: #444;
+      border-radius: 5px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 5px;
+      background: #444;
+      border-radius: 5px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #6c63ff;
+      border-radius: 5px;
+      width: 0%;
+    }
+
+    /* Remove blue highlight on mobile */
+    button, 
+    input,
+    .color-button,
+    .color-circle,
+    .controls-tab,
+    .play-btn,
+    .volume-icon {
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+
+    /* New comprehensive highlight prevention for all devices */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Extra protection for mobile devices */
+    @media (max-width: 768px) {
+      *:active, *:focus {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+      
+      .audio-player, 
+      .play-btn, 
+      .audio-title-container,
+      .audio-controls,
+      .controls-tab,
+      a, button, input {
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-touch-callout: none !important;
+      }
+    }
+
+    /* Add active state for better touch feedback */
+    .color-button:active,
+    .color-circle:active,
+    .scale-button:active,
+    .fullscreen-btn:active,
+    .play-btn:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
+    }
+
+    /* GitHub Button */
+    .github-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(30, 30, 30, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+    }
+
+    .github-button:hover {
+      transform: scale(1.1);
+      background-color: rgba(50, 50, 50, 0.8);
+    }
+
+    .github-button:active {
+      transform: scale(0.95);
+    }
+
+    .github-button.active {
+      transform: scale(0.95);
+    }
+
+    .github-button svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    /* Stars toggle container - adjusted for inline positioning */
+    .stars-toggle-container {
+      margin-left: 10px;
+      position: relative;
+    }
+
+    /* Ambient light container for flex layout */
+    .ambient-light-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    /* Touch interactions and feedback */
+    .control-group button,
+    .slider-button,
+    .color-button,
+    .play-btn,
+    input[type="range"] {
+      cursor: pointer;
+      transition: transform 0.1s ease-out;
+    }
+
+    .control-group button:active,
+    .slider-button:active,
+    .color-button:active,
+    .play-btn:active,
+    input[type="range"]:active,
+    .control-group button.active,
+    .slider-button.active,
+    .color-button.active,
+    .play-btn.active,
+    input[type="range"].active {
+      transform: scale(0.95);
+    }
+
+    /* Ensure controls are large enough for touch */
+    .slider-button,
+    .color-button,
+    .play-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 12px;
+    }
+
+    /* Improve touch area for sliders */
+    input[type="range"] {
+      height: 44px;
+      padding: 12px 0;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      width: 24px;
+      height: 24px;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Hide star icon */
+    .star-icon {
+      display: none !important;
+    }
+    
+    /* Fix the stars toggle button to match other toggles exactly */
+    #stars-toggle + .slider {
+      background-color: #333;
+      border-radius: 34px;
+    }
+    
+    #stars-toggle:checked + .slider {
+      background-color: #6c63ff;
+    }
+    
+    #stars-toggle + .slider:before {
+      display: block !important;
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    #stars-toggle:checked + .slider:before {
+      transform: translateX(24px);
+    }
+    
+    /* Hide the custom slider button that was causing problems */
+    #stars-toggle + .slider .slider-button {
+      display: none !important;
+    }
+  </style>
+</head>
+<body style="background-color: rgb(9, 10, 15);">
+  <!-- Stars background (hidden initially) -->
+  <div id="stars-container" style="opacity: 0;">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+  </div>
+
+  <!-- GitHub Button -->
+  <a href="https://saganaki22.github.io/LofiLamp/" class="github-button" aria-label="View on GitHub">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.82 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+    </svg>
+  </a>
+
+  <div class="scene">
+    <div class="lava-lamp" style="--height: 400; --width: 150; --scale: 1.5; --glare-intensity: 0.4; margin: 0px auto;">
+      <div class="lava-lamp__main">
+        <div class="lava-lamp__glass" style="background: radial-gradient(circle at 50% 50%, rgb(77, 23, 60) 25%, rgb(25, 181, 254));">
+          <div class="lava-lamp__lava" style="overflow: visible;">
+            <svg>
+              <ellipse class="blob blob--top" cx="35" cy="0" rx="35" ry="10"></ellipse>
+              <ellipse class="blob blob--bottom" cx="75" cy="270" rx="75" ry="10"></ellipse>
+              <!-- Generated blobs - set 1 -->
+              <circle id="blob1" class="blob" r="18.57660622896167" cx="30" cy="400" style="--skewX: 2; --skewY: -3; --height: 50; --speed: 32; --delay: -5; --direction: alternate-reverse; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 32s ease -5s infinite alternate-reverse none running blob; fill: rgb(255, 75, 75);" data-original-radius="25"></circle>
+              <circle id="blob2" class="blob" r="37.88867586415765" cx="78" cy="400" style="--skewX: -1; --skewY: 2; --height: 80; --speed: 13; --delay: -8; --direction: alternate-reverse; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; fill: rgb(255, 75, 75); animation: 13s ease -8s infinite alternate-reverse none running blob;" data-original-radius="40"></circle>
+              <circle id="blob3" class="blob" r="21.49317397027773" cx="120" cy="400" style="--skewX: 3; --skewY: 1; --height: 40; --speed: 22; --delay: -2; --direction: alternate; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 22s ease -2s infinite alternate none running blob; fill: rgb(255, 75, 75);" data-original-radius="20"></circle>
+              <!-- Generated blobs - set 2 -->
+              <circle id="blob4" class="blob" r="32.932097447974556" cx="45" cy="400" style="--skewX: -2; --skewY: -2; --height: 60; --speed: 26; --delay: -6; --direction: alternate; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 26s ease -6s infinite alternate none running blob; fill: rgb(255, 75, 75);" data-original-radius="30"></circle>
+              <circle id="blob5" class="blob" r="20.659320144411094" cx="95" cy="400" style="--skewX: 1; --skewY: 3; --height: 44; --speed: 9; --delay: -4; --direction: alternate; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 9s ease -4s infinite alternate none running blob; fill: rgb(255, 75, 75);" data-original-radius="22"></circle>
+              <circle id="blob6" class="blob" r="38.36425550965102" cx="15" cy="400" style="--skewX: 0; --skewY: -1; --height: 70; --speed: 20; --delay: -9; --direction: alternate; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 38s ease -9s infinite alternate none running blob; fill: rgb(255, 75, 75);" data-original-radius="35"></circle>
+              <circle id="blob7" class="blob" r="19.4771921339373" cx="135" cy="400" style="--skewX: -3; --skewY: 2; --height: 54; --speed: 40; --delay: -3; --direction: alternate-reverse; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 47s ease -3s infinite alternate-reverse none running blob; fill: rgb(255, 75, 75);" data-original-radius="27"></circle>
+              <!-- Generated blobs - set 3 -->
+              <circle id="blob8" class="blob" r="21.067699839212978" cx="60" cy="400" style="--skewX: 4; --skewY: 0; --height: 36; --speed: 13; --delay: -7; --direction: alternate-reverse; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; animation: 13s ease -7s infinite alternate-reverse none running blob; fill: rgb(255, 75, 75);" data-original-radius="18"></circle>
+              <circle id="blob9" class="blob" r="37.957258541587976" cx="110" cy="400" style="--skewX: -1; --skewY: -3; --height: 66; --speed: 34; --delay: -1; --direction: alternate; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; fill: rgb(255, 75, 75); animation: 15s ease -1s infinite alternate none running blob;" data-original-radius="33"></circle>
+              <!-- Generated blob - set 4 -->
+              <circle id="blob10" class="blob" r="42.641843395862224" cx="75" cy="400" style="--skewX: 2; --skewY: 2; --height: 76; --speed: 49; --delay: -10; --direction: alternate-reverse; --heat-factor: 0.6; --viscosity-factor: 10; --tension-factor: 1; transform-origin: center center; transform: translateZ(0px); backface-visibility: hidden; will-change: transform; fill: rgb(255, 75, 75); animation: 49s ease -10s infinite alternate-reverse none running blob;" data-original-radius="38"></circle>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="lava-lamp__base"></div>
+    </div>
+  </div>
+
+  <svg style="position: absolute; left: 100%">
+    <defs>
+      <filter id="goo">
+        <fegaussianblur in="SourceGraphic" stdDeviation="5" result="BLUR"></fegaussianblur>
+        <fecolormatrix in="BLUR" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 14.4 -5.6000000000000005" result="GOO"></fecolormatrix>
+        <feblend in="SourceGraphic" in2="GOO"></feblend>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Controls panel with tab -->
+  <div class="controls-panel active" id="controls-panel">
+    <div class="controls-tab" id="controls-tab">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="21" x2="4" y2="14"></line>
+        <line x1="4" y1="10" x2="4" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="3"></line>
+        <line x1="20" y1="21" x2="20" y2="16"></line>
+        <line x1="20" y1="12" x2="20" y2="3"></line>
+        <line x1="1" y1="14" x2="7" y2="14"></line>
+        <line x1="9" y1="8" x2="15" y2="8"></line>
+        <line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+    </div>
+
+    <div class="control-group">
+      <h3>Lava Color</h3>
+      <div class="color-buttons">
+        <div class="color-button active" id="red-btn" data-color="#ff4b4b"></div>
+        <div class="color-button" id="green-btn" data-color="#29f1c3"></div>
+        <div class="color-button" id="orange-btn" data-color="#ffb84b"></div>
+        <div class="color-button" id="rainbow-btn">
+          <input type="color" id="custom-color" value="#29f1c3">
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <h3>Physics Settings</h3>
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Heat Level</span>
+          <span id="heat-level-value">3</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" class="slider-control" id="heat-level">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Viscosity</span>
+          <span id="viscosity-value">1</span>
+        </div>
+        <input type="range" min="1" max="10" value="6" class="slider-control" id="viscosity">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Surface Tension</span>
+          <span id="tension-value">15</span>
+        </div>
+        <input type="range" min="1" max="30" value="15" class="slider-control" id="surface-tension">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Density Contrast</span>
+          <span id="density-value">4</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" class="slider-control" id="density-contrast">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <h3>Size &amp; Scale</h3>
+      <div class="scale-buttons">
+        <button class="scale-button" data-scale="1">1x</button>
+        <button class="scale-button active" data-scale="1.5">2x</button>
+        <button class="scale-button" data-scale="2">3x</button>
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Glare Intensity</span>
+          <span id="glare-value">4</span>
+        </div>
+        <input type="range" min="0" max="10" value="5" class="slider-control" id="glare-intensity">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <h3>Lighting</h3>
+      <div class="ambient-light-container">
+        <label class="switch">
+          <input type="checkbox" id="light-toggle">
+          <span class="slider"></span>
+        </label>
+        <div class="color-circle" id="ambient-color-circle" style="background: rgb(58, 31, 93);">
+          <input type="color" id="ambient-color" value="#3a1f5d">
+        </div>
+        <div class="stars-toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="stars-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button class="fullscreen-btn" id="fullscreen-btn">
+      Toggle Fullscreen
+    </button>
+  </div>
+
+  <!-- Audio Player with pulsing dot instead of "Live" text -->
+  <div class="audio-player" id="audio-player">
+    <div class="audio-controls">
+      <div class="play-btn" id="play-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div>
+      <div class="audio-title-container">
+        <div class="live-indicator"></div>
+        <div class="audio-title">Lofi Lamp</div>
+      </div>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 13.6667%;"></div>
+      </div>
+    </div>
+    
+    <div class="volume-container">
+      <svg class="volume-icon" id="volume-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"></path></svg>
+      <input type="range" min="0" max="100" value="50" class="volume-slider" id="volume-slider">
+    </div>
+  </div>
+
+  <audio id="audio-element">
+    <source src="https://fluxfm.streamabc.net/flx-chillhop-mp3-128-8581707?sABC=67po8s3q%230%2366q0680425or96r619s7r309o3867qsr%23fgernzf.syhksz.qr&amp;aw_0_1st.playerid=streams.fluxfm.de&amp;amsparams=playerid:streams.fluxfm.de;skey:1741393725" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Function to generate a random number in a range
+    const inRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    // Initialize variables
+    const controlsPanel = document.getElementById('controls-panel');
+    const controlsTab = document.getElementById('controls-tab');
+    const colorButtons = document.querySelectorAll('.color-button');
+    const customColorPicker = document.getElementById('custom-color');
+    const ambientColorPicker = document.getElementById('ambient-color');
+    const lightToggle = document.getElementById('light-toggle');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const blobs = document.querySelectorAll('.blob:not(.blob--top):not(.blob--bottom)');
+    const scaleButtons = document.querySelectorAll('.scale-button');
+    const lavaLamp = document.querySelector('.lava-lamp');
+    const starsContainer = document.getElementById('stars-container');
+    const githubButton = document.querySelector('.github-button');
+    const starsToggle = document.getElementById('stars-toggle');
+    
+    // Audio player elements
+    const audioElement = document.getElementById('audio-element');
+    const playBtn = document.getElementById('play-btn');
+    const volumeSlider = document.getElementById('volume-slider');
+    const volumeIcon = document.getElementById('volume-icon');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFill = document.getElementById('progress-fill');
+    
+    // Settings sliders
+    const heatLevel = document.getElementById('heat-level');
+    const heatValue = document.getElementById('heat-level-value');
+    const viscosity = document.getElementById('viscosity');
+    const viscosityValue = document.getElementById('viscosity-value');
+    const surfaceTension = document.getElementById('surface-tension');
+    const tensionValue = document.getElementById('tension-value');
+    const densityContrast = document.getElementById('density-contrast');
+    const densityValue = document.getElementById('density-value');
+    const glareIntensity = document.getElementById('glare-intensity');
+    const glareValue = document.getElementById('glare-value');
+    
+    // Initialize audio
+    audioElement.volume = 0.5; // Set initial volume to 50%
+    
+    // Control panel toggle
+    controlsTab.addEventListener('click', () => {
+      controlsPanel.classList.toggle('active');
+    });
+    
+    // Function to change blob colors - Fixed to avoid the weird circle issue
+    const changeBlobColor = (color) => {
+      // Update all blobs with new color
+      blobs.forEach(blob => {
+        // Set fill color directly
+        blob.style.fill = color;
+      });
+      
+      // Update custom color picker value
+      customColorPicker.value = color;
+      
+      // Update lamp glass background
+      const lampGlass = document.querySelector('.lava-lamp__glass');
+      
+      // Create darker version of color for gradient
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      
+      // Calculate darker shade without allowing weird circles
+      const darkerColor = `rgb(${Math.max(20, r * 0.3)}, ${Math.max(20, g * 0.3)}, ${Math.max(60, b * 0.5)})`;
+      
+      // Update glass background - But keep core structure to avoid weird circles
+      lampGlass.style.background = `radial-gradient(circle at 50% 50%, ${darkerColor} 25%, #19b5fe)`;
+      
+      // Update glare if light is on
+      if (lightToggle.checked) {
+        updateGlareColor(color);
+      }
+    };
+    
+    // Update glare color
+    const updateGlareColor = (color) => {
+      // Get computed style for the lamp
+      const lampStyle = getComputedStyle(lavaLamp);
+      
+      // Update the after pseudo-element directly - more reliable approach
+      lavaLamp.style.setProperty('--glare-color', color);
+      
+      // Set it directly in the CSS
+      document.styleSheets[0].insertRule(`.lava-lamp:after { background: radial-gradient(circle at 50% 50%, ${color}, transparent 60%) !important; }`, 0);
+    };
+    
+    // Set up color buttons
+    colorButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.id === 'rainbow-btn') {
+          // Open color picker when rainbow button is clicked
+          customColorPicker.click();
+        } else {
+          colorButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          const color = button.getAttribute('data-color');
+          changeBlobColor(color);
+        }
+      });
+    });
+    
+    // Custom color picker - Fixed to avoid weird circle
+    customColorPicker.addEventListener('input', () => {
+      // Remove active class from all preset buttons
+      colorButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Add active to rainbow button
+      document.getElementById('rainbow-btn').classList.add('active');
+      
+      // Get color from input
+      const color = customColorPicker.value;
+      
+      // Change blob colors
+      changeBlobColor(color);
+    });
+    
+    // Ambient color picker
+    const ambientColorCircle = document.getElementById('ambient-color-circle');
+    ambientColorCircle.addEventListener('click', () => {
+      ambientColorPicker.click();
+    });
+    
+    // Scale buttons
+    scaleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        scaleButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const scale = button.getAttribute('data-scale');
+        
+        // Set scale with smooth transition
+        lavaLamp.style.setProperty('--scale', scale);
+        
+        // Ensure lamp stays centered
+        lavaLamp.style.margin = '0 auto';
+      });
+    });
+
+    // Add enhanced touch support for GitHub button
+    if (githubButton) {
+      githubButton.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        githubButton.classList.add('active');
+      }, { passive: false });
+      
+      githubButton.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        githubButton.classList.remove('active');
+        // Get the href and navigate
+        const href = githubButton.getAttribute('href');
+        if (href) {
+          window.location.href = href;
+        }
+      }, { passive: false });
+      
+      githubButton.addEventListener('touchcancel', (e) => {
+        githubButton.classList.remove('active');
+      });
+    }
+    
+    // Heat level slider
+    heatLevel.addEventListener('input', () => {
+      const value = heatLevel.value;
+      heatValue.textContent = value;
+      const heatFactor = value / 5; // 5 is the default/middle value
+      document.documentElement.style.setProperty('--heat-factor', heatFactor);
+      
+      // Update all blob animations
+      blobs.forEach(blob => {
+        blob.style.setProperty('--heat-factor', heatFactor);
+      });
+    });
+    
+    // Viscosity slider
+    viscosity.addEventListener('input', () => {
+      const value = viscosity.value;
+      viscosityValue.textContent = value;
+      const viscosityFactor = 10 / value; // Inverse - higher viscosity = slower movement
+      document.documentElement.style.setProperty('--viscosity-factor', viscosityFactor);
+      
+      // Update all blob animations
+      blobs.forEach(blob => {
+        blob.style.setProperty('--viscosity-factor', viscosityFactor);
+      });
+    });
+    
+    // Surface tension slider
+    surfaceTension.addEventListener('input', () => {
+      const value = surfaceTension.value;
+      tensionValue.textContent = value;
+      const tensionFactor = value / 15; // 15 is the default/middle value
+      document.documentElement.style.setProperty('--tension-factor', tensionFactor);
+      
+      // Update all blob shape distortions
+      blobs.forEach(blob => {
+        blob.style.setProperty('--tension-factor', tensionFactor);
+      });
+      
+      // Update filter as well to adjust the "goo" effect
+      const gooFilter = document.querySelector('#goo feGaussianBlur');
+      const stdDeviation = 10 - (value / 15 * 5); // Adjust blur based on tension
+      gooFilter.setAttribute('stdDeviation', stdDeviation);
+    });
+    
+    // Density contrast slider
+    densityContrast.addEventListener('input', () => {
+      const value = densityContrast.value;
+      densityValue.textContent = value;
+      
+      // This affects how the blobs interact with each other and their size variance
+      // Let's adjust both the size of blobs and the strength of the goo effect
+      const contrastFactor = value / 5; // 5 is the default/middle value
+      
+      // Adjust the feColorMatrix values to change blob interaction
+      const gooMatrix = document.querySelector('#goo feColorMatrix');
+      const matrixValue = `1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 ${18 * contrastFactor} -${7 * contrastFactor}`;
+      gooMatrix.setAttribute('values', matrixValue);
+      
+      // Vary blob sizes
+      blobs.forEach(blob => {
+        const originalRadius = parseFloat(blob.getAttribute('data-original-radius') || blob.getAttribute('r'));
+        // Save original radius if not already saved
+        if (!blob.getAttribute('data-original-radius')) {
+          blob.setAttribute('data-original-radius', originalRadius);
+        }
+        
+        // Adjust radius by a random factor affected by the density contrast
+        const randomFactor = 0.7 + (Math.random() * 0.6 * contrastFactor);
+        blob.setAttribute('r', originalRadius * randomFactor);
+      });
+    });
+    
+    // Glare intensity slider
+    glareIntensity.addEventListener('input', () => {
+      const value = glareIntensity.value;
+      glareValue.textContent = value;
+      const intensityFactor = value / 10;
+      lavaLamp.style.setProperty('--glare-intensity', intensityFactor);
+    });
+    
+    // Light toggle and ambient color
+    lightToggle.addEventListener('change', () => {
+      if (lightToggle.checked) {
+        // Get ambient color
+        const color = ambientColorPicker.value;
+        document.body.style.backgroundColor = color;
+        document.body.style.transition = "background-color 0.5s ease";
+        
+        // Increase ambient light
+        const lampAfter = document.querySelector('.lava-lamp:after');
+        if (lampAfter) {
+          lampAfter.style.opacity = 0.8;
+        }
+      } else {
+        // Reset to dark background
+        document.body.style.backgroundColor = '#1d0033';
+        
+        // Reset lamp glow
+        const lampAfter = document.querySelector('.lava-lamp:after');
+        if (lampAfter) {
+          lampAfter.style.opacity = 0.5;
+        }
+      }
+    });
+    
+    // Ambient color picker
+    ambientColorPicker.addEventListener('input', () => {
+      // Update ambient color circle background
+      ambientColorCircle.style.background = ambientColorPicker.value;
+      
+      if (lightToggle.checked) {
+        document.body.style.backgroundColor = ambientColorPicker.value;
+      }
+    });
+    
+    // Fullscreen toggle
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    });
+    
+    // Audio player controls
+    let isPlaying = false;
+
+    // Play/Pause button
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audioElement.pause();
+        playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+      } else {
+        audioElement.play()
+          .catch(err => {
+            console.error("Error playing audio:", err);
+          });
+        playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Volume slider
+    volumeSlider.addEventListener('input', () => {
+      const volume = volumeSlider.value / 100;
+      audioElement.volume = volume;
+      
+      // Update volume icon based on level
+      if (volume === 0) {
+        volumeIcon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+      } else if (volume < 0.5) {
+        volumeIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
+      } else {
+        volumeIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+      }
+    });
+
+    // Restored progress bar update with animation frame
+    let progressAnimationId;
+    let startTime = 0;
+    
+    const updateProgressBar = () => {
+      if (!isPlaying) return;
+      
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      const progress = (elapsedSeconds % 300) / 300 * 100; // Loop every 5 minutes
+      progressFill.style.width = `${progress}%`;
+      
+      progressAnimationId = requestAnimationFrame(updateProgressBar);
+    };
+    
+    audioElement.addEventListener('playing', () => {
+      if (startTime === 0) {
+        startTime = Date.now();
+      }
+      
+      // Cancel any existing animation before starting a new one
+      if (progressAnimationId) {
+        cancelAnimationFrame(progressAnimationId);
+      }
+      
+      // Start the progress animation
+      updateProgressBar();
+    });
+    
+    audioElement.addEventListener('pause', () => {
+      // Stop the progress animation when paused
+      if (progressAnimationId) {
+        cancelAnimationFrame(progressAnimationId);
+      }
+    });
+
+    // Click on progress bar - for live stream, we can't seek but we'll still make it look interactive
+    progressBar.addEventListener('click', (e) => {
+      const rect = progressBar.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      progressFill.style.width = `${pos * 100}%`;
+    });
+
+    // Mute/unmute when clicking volume icon
+    let lastVolume = 0.5;
+    volumeIcon.addEventListener('click', () => {
+      if (audioElement.volume > 0) {
+        lastVolume = audioElement.volume;
+        audioElement.volume = 0;
+        volumeSlider.value = 0;
+        volumeIcon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+      } else {
+        audioElement.volume = lastVolume;
+        volumeSlider.value = lastVolume * 100;
+        if (lastVolume < 0.5) {
+          volumeIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
+        } else {
+          volumeIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+        }
+      }
+    });
+
+    // Dynamically update blob animations for variety
+    const updateBlobAnimations = () => {
+      blobs.forEach(blob => {
+        // Occasionally change blob speed and direction
+        if (Math.random() < 0.05) {
+          const newSpeed = inRange(8, 50);
+          const newDirection = Math.random() > 0.5 ? 'alternate' : 'alternate-reverse';
+          blob.style.setProperty('--speed', newSpeed);
+          blob.style.setProperty('--direction', newDirection);
+          
+          // Restart animation to prevent stuttering
+          blob.style.animationName = 'none';
+          blob.offsetHeight; // Trigger reflow
+          blob.style.animationName = 'blob';
+        }
+      });
+    };
+    
+    // Fix for disappearing blobs - ensure blobs remain visible throughout animation
+    const preventDisappearingBlobs = () => {
+      // Make SVG overflow visible to prevent clipping
+      document.querySelector('.lava-lamp__lava').style.overflow = 'visible';
+      
+      // Add transform-origin to all blobs for better animation
+      blobs.forEach(blob => {
+        blob.style.transformOrigin = 'center center';
+        
+        // Add hardware acceleration
+        blob.style.transform = 'translateZ(0)';
+        blob.style.backfaceVisibility = 'hidden';
+        blob.style.willChange = 'transform';
+        
+        // Make sure animation is properly applied
+        const delay = parseFloat(blob.style.getPropertyValue('--delay')) || 0;
+        const speed = parseFloat(blob.style.getPropertyValue('--speed')) || 20;
+        
+        // Reset animation if needed
+        if (Math.random() < 0.1) {
+          blob.style.animation = 'none';
+          setTimeout(() => {
+            blob.style.animation = `blob ${speed}s ${blob.style.getPropertyValue('--direction') || 'alternate'} infinite`;
+            blob.style.animationDelay = `${delay}s`;
+          }, 50);
+        }
+      });
+    };
+    
+    // Apply fixes periodically
+    setInterval(preventDisappearingBlobs, 3000);
+
+    // Star background activation after 50 seconds
+    setTimeout(() => {
+      // Enable stars
+      starsContainer.style.opacity = '1';
+      starsToggle.checked = true;
+
+      // Change background to a deeper color that works better with stars
+      if (!lightToggle.checked) {
+        document.body.style.backgroundColor = '#090A0F';
+      }
+    }, 50000);
+
+    // Stars toggle functionality
+    starsToggle.addEventListener('change', () => {
+      starsContainer.style.opacity = starsToggle.checked ? '1' : '0';
+      
+      // Update background color when stars are toggled
+      if (!lightToggle.checked) {
+        document.body.style.backgroundColor = starsToggle.checked ? '#090A0F' : '#1d0033';
+      }
+    });
+
+    // Add touch event listeners for interactive elements
+    const interactiveElements = document.querySelectorAll('button, .slider-button, .color-button, .play-btn, input[type="range"]');
+    
+    interactiveElements.forEach(element => {
+      element.addEventListener('touchstart', function(e) {
+        this.classList.add('active');
+      });
+      
+      element.addEventListener('touchend', function(e) {
+        this.classList.remove('active');
+      });
+      
+      element.addEventListener('touchcancel', function(e) {
+        this.classList.remove('active');
+      });
+    });
+
+    // Open the panel by default when the page loads, then close after a delay
+    window.addEventListener('load', () => {
+      controlsPanel.classList.add('active');
+      setTimeout(() => {
+        controlsPanel.classList.remove('active');
+      }, 1500);
+      
+      // Apply initial fixes
+      preventDisappearingBlobs();
+      
+      // Set initial ambient color circle background
+      ambientColorCircle.style.background = ambientColorPicker.value;
+      
+      // Ensure lava lamp is centered at start
+      lavaLamp.style.margin = '0 auto';
+    });
+    
+    // Run the blob animation update periodically
+    setInterval(updateBlobAnimations, 5000);
+
+    // Handle window resize for responsiveness
+    window.addEventListener('resize', () => {
+      // Ensure smooth transition during resize
+      if (window.innerWidth <= 480) {
+        lavaLamp.style.setProperty('--height', '300');
+        lavaLamp.style.setProperty('--width', '100');
+      } else if (window.innerWidth <= 768) {
+        lavaLamp.style.setProperty('--height', '350');
+        lavaLamp.style.setProperty('--width', '120');
+      } else {
+        lavaLamp.style.setProperty('--height', '400');
+        lavaLamp.style.setProperty('--width', '150');
+      }
+      
+      // Ensure lamp stays centered after resize
+      lavaLamp.style.margin = '0 auto';
+    });
+  </script>
+
+
+</body>
+</html>
